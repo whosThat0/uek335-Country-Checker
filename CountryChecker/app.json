@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "CountryCruxCH",
-    "slug": "CountryCruxCH",
+    "name": "CountryChecker",
+    "slug": "CountryChecker",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
