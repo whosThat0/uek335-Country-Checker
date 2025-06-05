@@ -5,3 +5,5 @@
 Add path
 ```
 
+## Installation
+Add installation instructions
