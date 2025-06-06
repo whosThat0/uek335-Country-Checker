@@ -87,6 +87,7 @@ export default function Login({navigation}) {
           ) : (
             <Button title="Login" onPress={handleLogin} />
           )}
+          <Button title="Register" onPress={() => navigation.navigate('Registration')} color="#007bff" />
         </View>
       </SafeAreaView>
     </SafeAreaProvider>
