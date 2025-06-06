@@ -2,6 +2,9 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import CountryService from './src/services/CountryService';
+import accessToken  from './src/services/api';
 import { Provider as PaperProvider, MD3LightTheme, configureFonts } from 'react-native-paper';
 import Home from './src/pages/Home';
 import Login from './src/pages/Login';
@@ -82,4 +85,15 @@ export default function App() {
       </NavigationContainer>
     </PaperProvider>
   );
+}
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 }
