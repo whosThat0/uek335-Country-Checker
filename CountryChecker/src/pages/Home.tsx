@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Button, Card, Text, Title, useTheme, Appbar } from 'react-native-paper';
-import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
-import MyAppBar from '../components/AppBar';
+import { Appbar, Button, Card, Text, Title, useTheme } from 'react-native-paper';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import AppBar from '../components/AppBar';
 
 const Home = ({ navigation }) => {
   const theme = useTheme();
@@ -38,7 +38,7 @@ const Home = ({ navigation }) => {
         >
           Click here
         </Button>
-        <MyAppBar></MyAppBar>
+        <AppBar navigation={navigation}></AppBar>
       </View>
     </SafeAreaProvider>
   );
