@@ -4,6 +4,8 @@ import { StyleSheet } from 'react-native';
 const BOTTOM_APPBAR_HEIGHT = 90;
 
 export default function AppBar({ navigation }) {
+  const theme = useTheme();
+
   return (
     <Appbar style={styles.bottomAppbar}>
       <Appbar.Action icon="home" size={35} onPress={() => navigation.navigate('Home')} />
@@ -15,6 +17,7 @@ export default function AppBar({ navigation }) {
 
 const styles = StyleSheet.create({
   bottomAppbar: {
+    backgroundColor: '#E5E7EB',
     position: 'absolute',
     left: 0,
     right: 0,
