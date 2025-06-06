@@ -1,7 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import CountryService from './src/services/CountryService';
+import accessToken  from './src/services/api';
 
-//Add Navigation with router dom
 
 export default function App() {
   return (
@@ -11,6 +13,7 @@ export default function App() {
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
