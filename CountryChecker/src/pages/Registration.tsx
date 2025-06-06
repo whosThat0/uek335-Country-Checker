@@ -2,20 +2,27 @@ import React, { useState } from "react";
 import {
   View,
   Text,
-  TextInput,
   Button,
   Alert,
   ActivityIndicator,
   ScrollView,
+  Platform
 } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
+import { TextInput } from "react-native-paper";
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default function Signup({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [age, setAge] = useState("");
+  const [date, setDate] = useState(new Date());
+  const [showDate, setShowDate] = useState(false);
 
   const handleSignup = async () => {
     setLoading(true);
@@ -30,7 +37,6 @@ export default function Signup({ navigation }) {
           password,
         }),
       });
-
       const data = await response.json();
 
       if (response.ok && data.accessToken) {
@@ -49,6 +55,13 @@ export default function Signup({ navigation }) {
     }
   };
 
+  const onChange = (_event, selectedDate) => {
+    setShowDate(Platform.OS === 'ios');
+    if (selectedDate) {
+      setDate(selectedDate);
+    }
+  };
+
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1 }}>
@@ -61,67 +74,44 @@ export default function Signup({ navigation }) {
 
           <Text style={{ margin: 10, fontSize: 13 }}>Email:</Text>
           <TextInput
-            style={{
-              height: 40,
-              borderColor: "gray",
-              borderWidth: 1,
-              margin: 10,
-              paddingLeft: 5,
-            }}
+            label="Email"
             onChangeText={setEmail}
-            value={email}
-            placeholder="Enter your email"
           />
           <Text style={{ margin: 10, fontSize: 13 }}>Password:</Text>
           <TextInput
-            style={{
-              height: 40,
-              borderColor: "gray",
-              borderWidth: 1,
-              margin: 10,
-              paddingLeft: 5,
-            }}
+            label ="Password"
             onChangeText={setPassword}
-            value={password}
-            placeholder="Enter your password"
             secureTextEntry
           />
 
           <Text style={{ margin: 10, fontSize: 13 }}>First Name:</Text>
           <TextInput
-            style={{
-              height: 40,
-              borderColor: "gray",
-              borderWidth: 1,
-              margin: 10,
-              paddingLeft: 5,
-            }}
-            placeholder="Enter your first name"
+          label="First Name"
           />
 
           <Text style={{ margin: 10, fontSize: 13 }}>Last Name:</Text>
           <TextInput
-            style={{
-              height: 40,
-              borderColor: "gray",
-              borderWidth: 1,
-              margin: 10,
-              paddingLeft: 5,
-            }}
-            placeholder="Enter your last name"
+            label="Last Name"
           />
           <Text style={{ margin: 10, fontSize: 13 }}>Age:</Text>
           <TextInput
-            style={{
-              height: 40,
-              borderColor: "gray",
-              borderWidth: 1,
-              margin: 10,
-              paddingLeft: 5,
-            }}
-            placeholder="Enter your age"
+            label="Age"
             keyboardType="numeric"
           />
+          <View>
+            <Text onPress={() => setShowDate(true)}>Birthday</Text>
+            <TextInput
+              label="Birthday">
+              {showDate && (
+              <DateTimePicker
+                value={date}
+                mode="date"
+                display="default"
+                onChange={onChange}
+              />
+              )}
+              </TextInput>
+          </View>
           <View style={{ margin: 10 }}>
             {loading ? (
               <ActivityIndicator size="large" color="#007bff" />
