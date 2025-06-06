@@ -1,12 +1,13 @@
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const axiosInstance = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://rest-jsondb.sliplane.app/",
 });
 
 axiosInstance.interceptors.request.use(
   async (config) => {
-    const token = await localStorage.getItem("token");
+    const token = await AsyncStorage.getItem("token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
