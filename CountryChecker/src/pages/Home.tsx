@@ -2,13 +2,10 @@ import * as React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Button, Card, Text, Title, useTheme, Appbar } from 'react-native-paper';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
-
-const BOTTOM_APPBAR_HEIGHT = 80;
-const MEDIUM_FAB_HEIGHT = 56;
+import MyAppBar from '../components/AppBar';
 
 const Home = ({ navigation }) => {
   const theme = useTheme();
-  const { bottom } = useSafeAreaInsets();
 
   return (
     <SafeAreaProvider>
@@ -41,30 +38,7 @@ const Home = ({ navigation }) => {
         >
           Click here
         </Button>
-
-        <Appbar
-          style={[
-            styles.bottomAppbar,
-            {
-              height: BOTTOM_APPBAR_HEIGHT + bottom,
-              backgroundColor: theme.colors.elevation.level2,
-            },
-          ]}
-          safeAreaInsets={{ bottom }}
-        >
-          <Appbar.Action 
-            icon="home" 
-            onPress={() => console.log('Home pressed')} 
-          />
-          <Appbar.Action 
-            icon="flag" 
-            onPress={() => console.log('Flag pressed')} 
-          />
-          <Appbar.Action 
-            icon="account" 
-            onPress={() => console.log('Profile pressed')} 
-          />
-        </Appbar>
+        <MyAppBar></MyAppBar>
       </View>
     </SafeAreaProvider>
   );
@@ -100,17 +74,6 @@ const styles = StyleSheet.create({
   button: {
     elevation: 4,
     borderRadius: 6,
-  },
-  bottomAppbar: {
-    backgroundColor: 'aquamarine',
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
-  fab: {
-    position: 'absolute',
-    right: 16,
   },
 });
 
