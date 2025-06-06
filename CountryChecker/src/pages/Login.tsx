@@ -75,7 +75,7 @@ export default function Login({navigation}) {
         />
           <View style={{ marginVertical: 16 }}>
             <TouchableOpacity
-              onPress={() => navigation.navigate("Signup")}
+              onPress={() => navigation.navigate("Registration")}
               style={{
                 backgroundColor: "#007bff",
                 padding: 12,
