@@ -1,8 +1,17 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, Alert, ActivityIndicator } from "react-native";
+import {
+  View,
+  Text,
+  Button,
+  Alert,
+  ActivityIndicator,
+  TouchableOpacity,
+} from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
+import { TextInput } from "react-native-paper";
+
 
 export default function Login({navigation}) {
   const [email, setEmail] = useState("");
@@ -45,50 +54,46 @@ export default function Login({navigation}) {
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView>
+      <SafeAreaView flex style={{ flex: 1, padding: 16 }}>
         <View style={{ alignItems: "center", marginTop: 20 }}>
           <Text style={{ fontSize: 24, fontWeight: "bold" }}>Login</Text>
         </View>
 
-        <Text style={{ margin: 15, fontSize: 16 }}>Please enter your credentials:</Text>
+          <TextInput
+            label="Email"
+            value={email}
+            onChangeText={setEmail}
+            style={{ marginVertical: 8 }}
+          />
 
-        <Text style={{ margin: 10, fontSize: 13 }}>Username:</Text>
         <TextInput
-          style={{
-            height: 40,
-            borderColor: "gray",
-            borderWidth: 1,
-            margin: 10,
-            paddingLeft: 5,
-          }}
-          onChangeText={setEmail}
-          value={email}
-          placeholder="Enter your email"
-        />
-
-        <Text style={{ margin: 10, fontSize: 13 }}>Password:</Text>
-        <TextInput
-          style={{
-            height: 40,
-            borderColor: "gray",
-            borderWidth: 1,
-            margin: 10,
-            paddingLeft: 5,
-          }}
+          label="Password"
           onChangeText={setPassword}
           value={password}
-          placeholder="Enter your password"
           secureTextEntry
+          style={{ marginVertical: 8 }}
         />
-
-        <View style={{ margin: 10 }}>
-          {loading ? (
-            <ActivityIndicator size="large" color="#007bff" />
-          ) : (
-            <Button title="Login" onPress={handleLogin} />
-          )}
-          <Button title="Register" onPress={() => navigation.navigate('Registration')} color="#007bff" />
-        </View>
+          <View style={{ marginVertical: 16 }}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Signup")}
+              style={{
+                backgroundColor: "#007bff",
+                padding: 12,
+                borderRadius: 4,
+                alignItems: "center",
+              }}
+            >
+              <Text style={{ color: "#fff", fontSize: 16 }}>Don't have an account? Sign Up</Text>
+            </TouchableOpacity>
+          </View>
+          
+          <View style={{ margin: 10 }}>
+            {loading ? (
+              <ActivityIndicator size="large" color="#007bff" />
+            ) : (
+              <Button title="Login" onPress={handleLogin} />
+            )}
+          </View>
       </SafeAreaView>
     </SafeAreaProvider>
   );

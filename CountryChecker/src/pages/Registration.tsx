@@ -5,14 +5,12 @@ import {
   Button,
   Alert,
   ActivityIndicator,
-  ScrollView,
-  Platform
+  TouchableOpacity
 } from "react-native";
+
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native";
 import { TextInput } from "react-native-paper";
-import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default function Signup({ navigation }) {
   const [email, setEmail] = useState("");
@@ -21,8 +19,6 @@ export default function Signup({ navigation }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [age, setAge] = useState("");
-  const [date, setDate] = useState(new Date());
-  const [showDate, setShowDate] = useState(false);
 
   const handleSignup = async () => {
     setLoading(true);
@@ -37,6 +33,7 @@ export default function Signup({ navigation }) {
           password,
         }),
       });
+
       const data = await response.json();
 
       if (response.ok && data.accessToken) {
@@ -55,71 +52,70 @@ export default function Signup({ navigation }) {
     }
   };
 
-  const onChange = (_event, selectedDate) => {
-    setShowDate(Platform.OS === 'ios');
-    if (selectedDate) {
-      setDate(selectedDate);
-    }
-  };
-
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={{ flex: 1 }}>
-        <ScrollView contentContainerStyle={{ padding: 16 }}>
+      <SafeAreaView style={{ flex: 1, padding: 16 }}>
           <View style={{ alignItems: "center", marginTop: 20 }}>
             <Text style={{ fontSize: 24, fontWeight: "bold" }}>Signup</Text>
           </View>
 
-          <Text style={{ margin: 15, fontSize: 16 }}>Please enter your credentials:</Text>
-
-          <Text style={{ margin: 10, fontSize: 13 }}>Email:</Text>
           <TextInput
             label="Email"
+            value={email}
             onChangeText={setEmail}
+            style={{ marginVertical: 8 }}
           />
-          <Text style={{ margin: 10, fontSize: 13 }}>Password:</Text>
+
           <TextInput
-            label ="Password"
+            label="Password"
+            value={password}
             onChangeText={setPassword}
             secureTextEntry
+            style={{ marginVertical: 8 }}
           />
 
-          <Text style={{ margin: 10, fontSize: 13 }}>First Name:</Text>
           <TextInput
-          label="First Name"
+            label="First Name"
+            value={firstName}
+            onChangeText={setFirstName}
+            style={{ marginVertical: 8 }}
           />
 
-          <Text style={{ margin: 10, fontSize: 13 }}>Last Name:</Text>
           <TextInput
             label="Last Name"
+            value={lastName}
+            onChangeText={setLastName}
+            style={{ marginVertical: 8 }}
           />
-          <Text style={{ margin: 10, fontSize: 13 }}>Age:</Text>
+
           <TextInput
             label="Age"
+            value={age}
+            onChangeText={setAge}
             keyboardType="numeric"
+            style={{ marginVertical: 8 }}
           />
-          <View>
-            <Text onPress={() => setShowDate(true)}>Birthday</Text>
-            <TextInput
-              label="Birthday">
-              {showDate && (
-              <DateTimePicker
-                value={date}
-                mode="date"
-                display="default"
-                onChange={onChange}
-              />
-              )}
-              </TextInput>
+
+          <View style={{ marginVertical: 16 }}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Login")}
+              style={{
+                backgroundColor: "#007bff",
+                padding: 12,
+                borderRadius: 4,
+                alignItems: "center",
+              }}
+            >
+              <Text style={{ color: "#fff", fontSize: 16 }}>Already have an account? Login</Text>
+            </TouchableOpacity>
           </View>
-          <View style={{ margin: 10 }}>
+          <View style={{ marginVertical: 16 }}>
             {loading ? (
               <ActivityIndicator size="large" color="#007bff" />
             ) : (
               <Button title="Signup" onPress={handleSignup} />
             )}
           </View>
-        </ScrollView>
       </SafeAreaView>
     </SafeAreaProvider>
   );
