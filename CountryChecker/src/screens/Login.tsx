@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import {
   View,
@@ -6,44 +7,14 @@ import {
   Alert,
   ActivityIndicator,
   TouchableOpacity,
-  TextStyle,
-  ViewStyle,
 } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import { TextInput, useTheme } from "react-native-paper";
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { TextInput } from "react-native-paper";
 
-const style: {
-  errorMessage: TextStyle;
-  button: ViewStyle;
-  textField: ViewStyle;
-  title: TextStyle;
-} = {
-  button: {
-    backgroundColor: "#007bff",
-    padding: 12,
-    borderRadius: 4,
-    alignItems: "center",
-  },
-  textField: {
-    marginVertical: 7,
-    backgroundColor: "#fff",
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 4,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "light",
-    marginBottom: 20,
-  },
-};
 
-export default function Login({ navigation, setIsLoggedIn }) {
-   const theme = useTheme(); 
-
+export default function Login({navigation}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -67,11 +38,15 @@ export default function Login({ navigation, setIsLoggedIn }) {
       if (response.ok && data.accessToken) {
         await AsyncStorage.setItem("@access_token", data.accessToken);
         Alert.alert("Login Successful ", `Welcome, ${email}!`);
-        setIsLoggedIn(true);
+        navigation.navigate('Home');
       } else {
-        Alert.alert("Invalid credentials", data.message || "Your login is incorrect, please try again.");
+        console.error("Login failed:", data);
+        console.error("Caught error:", JSON.stringify(Error, null, 2));
+        Alert.alert("Login Failed", data.message || "Invalid credentials");
       }
     } catch (error) {
+      console.log(error);
+      console.error("Login error:", error);
       Alert.alert("Error", "Something went wrong. Try again later.");
     } finally {
       setLoading(false);
@@ -80,25 +55,16 @@ export default function Login({ navigation, setIsLoggedIn }) {
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView flex style={{ flex: 1, padding: 16, backgroundColor: theme.colors.secondaryContainer }}>
+      <SafeAreaView flex style={{ flex: 1, padding: 16 }}>
         <View style={{ alignItems: "center", marginTop: 20 }}>
-          <Text style={style.title}>Login</Text>
+          <Text style={{ fontSize: 24, fontWeight: "bold" }}>Login</Text>
         </View>
 
           <TextInput
             label="Email"
             value={email}
             onChangeText={setEmail}
-            style={style.textField}
-            autoCapitalize="none"
-            right={
-            email.length > 0 ? (
-              <TextInput.Icon
-                icon={() => <MaterialCommunityIcons name="close" size={20} />}
-                onPress={() => setEmail("")}
-            />
-            ) : null
-  }
+            style={{ marginVertical: 8 }}
           />
 
         <TextInput
@@ -106,46 +72,29 @@ export default function Login({ navigation, setIsLoggedIn }) {
           onChangeText={setPassword}
           value={password}
           secureTextEntry
-          style={style.textField}
-          right={
-            password.length > 0 ? (
-              <TextInput.Icon
-                icon={() => <MaterialCommunityIcons name="close" size={20} />}
-                onPress={() => setPassword("")}
-              />
-            ) : null
-          }
+          style={{ marginVertical: 8 }}
         />
-        
-       <View style={{ flexDirection: "row", justifyContent: "flex-start", marginVertical: 16 }}>
-         <Text style={{ fontSize: 12, color: "#222" }}>Haven't got an account yet? </Text>
-         <Text
-           style={{ fontSize: 12, color: "#007bff", fontWeight: "bold" }}
-           onPress={() => navigation.navigate("Registration")}
-         >
-           sign up
-         </Text>
-       </View>
-       
-       <View style={{ marginVertical: 16, alignItems: "flex-end" }}>
-         {loading ? (
-           <ActivityIndicator size="small" color="#007bff" />
-         ) : (
-           <TouchableOpacity
-             onPress={handleLogin}
-             style={{
-               backgroundColor: theme.colors.secondary,
-               paddingVertical: 8,
-               paddingHorizontal: 18,
-               borderRadius: 4,
-               alignItems: "center",
-             }}
-           >
-             <Text style={{ color: "#fff", fontSize: 14, fontWeight: "bold" }}>Sign in</Text>
-           </TouchableOpacity>
-         )}
-       </View>
-       
+          <View style={{ marginVertical: 16 }}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Registration")}
+              style={{
+                backgroundColor: "#007bff",
+                padding: 12,
+                borderRadius: 4,
+                alignItems: "center",
+              }}
+            >
+              <Text style={{ color: "#fff", fontSize: 16 }}>Don't have an account? Sign Up</Text>
+            </TouchableOpacity>
+          </View>
+          
+          <View style={{ margin: 10 }}>
+            {loading ? (
+              <ActivityIndicator size="large" color="#007bff" />
+            ) : (
+              <Button title="Login" onPress={handleLogin} />
+            )}
+          </View>
       </SafeAreaView>
     </SafeAreaProvider>
   );
