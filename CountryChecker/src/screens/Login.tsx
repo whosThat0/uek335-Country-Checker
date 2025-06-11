@@ -40,6 +40,12 @@ const style: {
     fontWeight: "light",
     marginBottom: 20,
   },
+  errorMessage: {
+    color: "red",
+    fontSize: 10,
+    marginTop: -4,
+    marginBottom: 4,
+  },
 };
 
 export default function Login({ navigation, setIsLoggedIn }) {
@@ -52,7 +58,7 @@ export default function Login({ navigation, setIsLoggedIn }) {
   const handleLogin = async () => {
     setLoading(true);
     try {
-      const response = await fetch("https://rest-jsondb.sliplane.app/login", {
+      const response = await fetch("https://jsonrest-7d8bc7a.onwireway.online/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -81,7 +87,7 @@ export default function Login({ navigation, setIsLoggedIn }) {
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView flex style={{ flex: 1, padding: 16, backgroundColor: theme.colors.secondaryContainer }}>
+      <SafeAreaView style={{ flex: 1, padding: 16, backgroundColor: theme.colors.secondaryContainer }}>
         <View style={{ alignItems: "center", marginTop: 20 }}>
           <Text style={style.title}>Login</Text>
         </View>
