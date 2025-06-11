@@ -63,10 +63,6 @@ export default function Countries({ navigation }) {
   const theme = useTheme();
   const [countries, setCountries] = React.useState([]);
 
-  const handlePress = () => {
-    console.log("Floating button pressed");
-  };
-
   const fetchCountries = async () => {
     try {
       const response = await api.get('/country');
@@ -95,7 +91,7 @@ return (
             <View style={styles.cardHeader}>
               <Text style={styles.name}>{country.country_name}</Text>
               <View style={styles.iconContainer}>
-                <Ionicons name="information-circle" size={20} color="#000000" onPress={() => console.log("Country ausgewählt:", country.id)} />
+                <Ionicons name="information-circle" size={20} color="#000000"  onPress={() => navigation.navigate('CountryDetails', { country })}/>
                 <Ionicons name="checkmark" size={20} color="#000000" onPress={() => console.log("Country genehmigt:", country.id)} />
                 <Ionicons name="trash" size={20} color="#000000" onPress={() => console.log("Country gelöscht:", country.id)} />
               </View>
