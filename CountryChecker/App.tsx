@@ -1,99 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
-import CountryService from './src/services/CountryService';
-import accessToken  from './src/services/api';
-import { Provider as PaperProvider, MD3LightTheme, configureFonts } from 'react-native-paper';
-import Home from './src/pages/Home';
-import Login from './src/pages/Login';
-import Registration from './src/pages/Registration';
-import Account from './src/pages/Account';
-import Countries from './src/pages/Countries';
-import CountryDetails from './src/pages/CountryDetails';
-import { useFonts } from 'expo-font';
-
-const fontConfig = {
-  fontFamily: 'Montserrat-Regular',
-  fontSize: 16,
-  lineHeight: 24,
-  letterSpacing: 0,
-  fontWeight: '400' as const,
-};
-
-const lightFontConfig = {
-  fontFamily: 'Montserrat-Light',
-  fontSize: 16,
-  lineHeight: 24,
-  letterSpacing: 0,
-  fontWeight: '300' as const,
-};
-
-const customFonts = configureFonts({
-  config: {
-    displayLarge: fontConfig,
-    displayMedium: fontConfig,
-    displaySmall: fontConfig,
-    headlineLarge: fontConfig,
-    headlineMedium: fontConfig,
-    headlineSmall: fontConfig,
-    titleLarge: fontConfig,
-    titleMedium: fontConfig,
-    titleSmall: fontConfig,
-    labelLarge: fontConfig,
-    labelMedium: fontConfig,
-    labelSmall: fontConfig,
-    bodyLarge: fontConfig,
-    bodyMedium: fontConfig,
-    bodySmall: lightFontConfig,
-  },
-});
-
-const theme = {
-  ...MD3LightTheme,
-  fonts: customFonts,
-  colors: {
-    ...MD3LightTheme.colors,
-    background: '#eee7f8',
-  }
-};
-
-const Stack = createNativeStackNavigator();
+import AppNavigator from './src/navigation/AppNavigator';
+import { Provider as PaperProvider } from 'react-native-paper';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import * as Font from 'expo-font';
+import AppLoading from 'expo-app-loading';
 
 export default function App() {
-  const [fontsLoaded] = useFonts({
-    'Montserrat-Regular': require('./assets/fonts/Montserrat-Regular.ttf'),
-    'Montserrat-Light': require('./assets/fonts/Montserrat-Light.ttf'),
-  });
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+
+  const loadFonts = async () => {
+    await Font.loadAsync({
+      ...MaterialCommunityIcons.font,
+    });
+    setFontsLoaded(true);
+  };
 
   if (!fontsLoaded) {
-    return null;
+    return <AppLoading startAsync={loadFonts} onFinish={() => setFontsLoaded(true)} onError={console.warn} />;
   }
 
   return (
-    <PaperProvider theme={theme}>
+    <PaperProvider
+      settings={{
+        icon: (props) => <MaterialCommunityIcons {...props} />,
+      }}
+    >
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Login">
-          <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen name="Registration" component={Registration} />
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Account" component={Account} />
-          <Stack.Screen name="Countries" component={Countries} />
-          <Stack.Screen name="CountryDetails" component={CountryDetails} />
-        </Stack.Navigator>
+        <AppNavigator isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       </NavigationContainer>
     </PaperProvider>
   );
-}
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
 }
