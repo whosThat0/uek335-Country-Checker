@@ -1,29 +1,45 @@
-import { Appbar, useTheme } from 'react-native-paper';
-import { StyleSheet } from 'react-native';
 
-const BOTTOM_APPBAR_HEIGHT = 90;
+import React, { useState } from 'react';
+import { BottomNavigation } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
 
-export default function AppBar({ navigation }) {
-  const theme = useTheme();
+const AppBar = () => {
+  const navigation = useNavigation();
+  const [index, setIndex] = useState(0);
+
+  const routes = [
+    { key: 'Home', title: 'Home', icon: 'home' },
+    { key: 'Countries', title: 'Countries', icon: 'flag' },
+    { key: 'Profile', title: 'Profile', icon: 'account' },
+  ];
+
+  const renderScene = BottomNavigation.SceneMap({
+    Home: () => null,
+    Countries: () => null,
+    Profile: () => null,
+  });
 
   return (
-    <Appbar style={styles.bottomAppbar}>
-      <Appbar.Action icon="home" size={35} onPress={() => navigation.navigate('Home')} />
-      <Appbar.Action icon="flag" size={35} onPress={() => navigation.navigate('Countries')} />
-      <Appbar.Action icon="account" size={35} onPress={() => navigation.navigate('Account')} />
-    </Appbar>
+    <BottomNavigation
+      navigationState={{ index, routes }}
+      onIndexChange={(newIndex) => {
+        setIndex(newIndex);
+        const route = routes[newIndex].key;
+        navigation.navigate(route as never);
+      }}
+      renderScene={renderScene}
+      style={{
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: '#fff',
+        elevation: 8, 
+        borderTopWidth: 1,
+        borderTopColor: '#eee',
+      }}
+    />
   );
-}
+};
 
-const styles = StyleSheet.create({
-  bottomAppbar: {
-    backgroundColor: '#E5E7EB',
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
-    height: BOTTOM_APPBAR_HEIGHT,
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-  },
-});
+export default AppBar;
