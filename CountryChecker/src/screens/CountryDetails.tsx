@@ -60,7 +60,7 @@ export default function CountryDetails({ route, navigation }) {
       </View>
     <Button
               mode="contained"
-              onPress={() => navigation.navigate('Countries')}
+              onPress={() => navigation.navigate('MainTabs', { screen: 'Countries' })}
               style={styles.button}
               buttonColor={theme.colors.primary}
             >

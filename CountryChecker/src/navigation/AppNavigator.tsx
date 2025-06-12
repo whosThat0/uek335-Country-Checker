@@ -9,6 +9,7 @@ import Home from '../screens/Home';
 import Account from '../screens/Account';
 import Countries from '../screens/Countries';
 import CountryDetails from '../screens/CountryDetails';
+import CountryEdit from '../screens/CountryEdit';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -64,6 +65,9 @@ export default function AppNavigator({ isLoggedIn, setIsLoggedIn }) {
             {props => <MainTabs {...props} setIsLoggedIn={setIsLoggedIn} />}
           </Stack.Screen>
           <Stack.Screen name="CountryDetails" component={CountryDetails} />
+          <Stack.Screen name="CountryEdit" component={CountryEdit} />
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Countries" component={Countries} />
         </>
       )}
     </Stack.Navigator>
