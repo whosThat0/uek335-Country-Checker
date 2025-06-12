@@ -1,39 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StyleSheet, Text, View } from 'react-native';
-import Home from './src/pages/Home';
-import Login from './src/pages/Login';
-import Registration from './src/pages/Registration';
-
-import Account from './src/pages/Account';
-import Countries from './src/pages/Countries';
-import CountryDetails from './src/pages/CountryDetails';
-
-const Stack = createNativeStackNavigator();
+import AppNavigator from './src/navigation/AppNavigator';
+import { Provider as PaperProvider } from 'react-native-paper';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import * as Font from 'expo-font';
+import AppLoading from 'expo-app-loading';
 
 export default function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+
+  const loadFonts = async () => {
+    await Font.loadAsync({
+      ...MaterialCommunityIcons.font,
+    });
+    setFontsLoaded(true);
+  };
+
+  if (!fontsLoaded) {
+    return <AppLoading startAsync={loadFonts} onFinish={() => setFontsLoaded(true)} onError={console.warn} />;
+  }
+
   return (
-    <>
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="Registration" component={Registration} />
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Account" component={Account} />
-        <Stack.Screen name="Countries" component={Countries} />
-        <Stack.Screen name="CountryDetails" component={CountryDetails} />
-      </Stack.Navigator>
-    </NavigationContainer>
-    </>
+    <PaperProvider
+      settings={{
+        icon: (props) => <MaterialCommunityIcons {...props} />,
+      }}
+    >
+      <NavigationContainer>
+        <AppNavigator isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+      </NavigationContainer>
+    </PaperProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

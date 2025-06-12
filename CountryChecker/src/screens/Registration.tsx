@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import {
   View,
@@ -94,7 +95,7 @@ export default function Signup({ navigation, setIsLoggedIn }) {
   };
   const handleAgeChange = (text) => {
     setAge(text);
-    setAgeError(isAgeValid(text) ? "" : "Min. age 10, max. 100", "numbers only.");
+    setAgeError(isAgeValid(text) ? "" : "Min. age 10, max. 100");
   };
 
   const handleSignup = async () => {
@@ -123,7 +124,7 @@ export default function Signup({ navigation, setIsLoggedIn }) {
 
     setLoading(true);
     try {
-      const response = await fetch("https://rest-jsondb.sliplane.app/signup", {
+      const response = await fetch("https://jsonrest-7d8bc7a.onwireway.online/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
