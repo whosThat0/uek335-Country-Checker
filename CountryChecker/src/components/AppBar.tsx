@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { BottomNavigation } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
@@ -13,12 +12,6 @@ const AppBar = () => {
     { key: 'Profile', title: 'Profile', icon: 'account' },
   ];
 
-  const renderScene = BottomNavigation.SceneMap({
-    Home: () => null,
-    Countries: () => null,
-    Profile: () => null,
-  });
-
   return (
     <BottomNavigation
       navigationState={{ index, routes }}
@@ -27,14 +20,16 @@ const AppBar = () => {
         const route = routes[newIndex].key;
         navigation.navigate(route as never);
       }}
-      renderScene={renderScene}
+      renderScene={() => null}
+      shifting={false}
+      labeled={true}
       style={{
         position: 'absolute',
         left: 0,
         right: 0,
         bottom: 0,
         backgroundColor: '#fff',
-        elevation: 8, 
+        elevation: 8,
         borderTopWidth: 1,
         borderTopColor: '#eee',
       }}

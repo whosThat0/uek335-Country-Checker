@@ -92,8 +92,7 @@ export default function Account({ navigation, setIsLoggedIn }) {
             <InfoLabel label="Email" value={user.email} />
             <InfoLabel label="First name" value={user.firstName} />
             <InfoLabel label="Last name" value={user.lastName} />
-            <InfoLabel label="Gender" value={user.gender} />
-            <InfoLabel label="Birthdate" value={user.birthdate} />
+            <InfoLabel label="Age" value={user.age} />
           </Card.Content>
 
           <Card.Actions style={styles.actions}>
