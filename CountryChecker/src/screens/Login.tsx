@@ -107,11 +107,11 @@ export default function Login({ navigation, setIsLoggedIn }) {
     ) : null
     }
     />
-{!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length > 0 ? (
-  <Text style={{ color: "red", marginLeft: 4, marginBottom: 4, fontSize: 12 }}>
-    Please enter a valid email address.
-  </Text>
-) : null}
+      {!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length > 0 ? (
+    <Text style={{ color: "red", marginLeft: 4, marginBottom: 4, fontSize: 12 }}>
+      Please enter a valid email address.
+    </Text>
+    ) : null}
 
         <TextInput
           label="Password"

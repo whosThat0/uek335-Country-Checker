@@ -7,13 +7,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#e8def8',
-    padding: 20,
+    padding: 16,
   },
   title: {
-    fontSize: 26,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 12,
+    fontSize: 22,
+    marginTop: 60,
+    marginBottom: 20,
+    alignSelf: 'center',
   },
   label: {
     fontSize: 16,
@@ -34,6 +34,12 @@ const styles = StyleSheet.create({
   cardContent: {
     padding: 12,
   },
+    button: {
+    alignSelf: 'flex-start',
+    marginBottom: 10,
+    elevation: 4,
+    borderRadius: 6,
+  },
 });
 
 export default function CountryDetails({ route, navigation }) {
@@ -52,9 +58,14 @@ export default function CountryDetails({ route, navigation }) {
           <Text style={styles.value}>{country.id}</Text>
         </View>
       </View>
-    <Button mode="contained" onPress={() => navigation.navigate('Countries')}>
-      back to all the Countries
-    </Button>
+    <Button
+              mode="contained"
+              onPress={() => navigation.navigate('Countries')}
+              style={styles.button}
+              buttonColor={theme.colors.primary}
+            >
+              Back to all the countries
+            </Button>
     </SafeAreaView>
   );
 }
