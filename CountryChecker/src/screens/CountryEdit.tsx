@@ -79,7 +79,7 @@ export default function CountryEdit({ navigation, route }) {
         continent: countryContinent,
       });
       console.log("Country updated!");
-      navigation.navigate('Countries');
+      navigation.navigate('MainTabs', { screen: 'Countries' });
     } catch (error) {
       console.error("Error updating country:", error);
     }
@@ -145,7 +145,7 @@ export default function CountryEdit({ navigation, route }) {
 
       <Button
         mode="outlined"
-       onPress={() => navigation.navigate('Countries', { country })}
+        onPress={() => navigation.navigate('MainTabs', { screen: 'Countries' })}
       >
         Cancel
       </Button>

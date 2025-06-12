@@ -68,8 +68,6 @@ export default function AppNavigator({ isLoggedIn, setIsLoggedIn }) {
           <Stack.Screen name="CountryDetails" component={CountryDetails} />
           <Stack.Screen name="CountryEdit" component={CountryEdit} />
             <Stack.Screen name="CountryAdd" component={CountryAdd} />
-          <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen name="Countries" component={Countries} />
         </>
       )}
     </Stack.Navigator>
