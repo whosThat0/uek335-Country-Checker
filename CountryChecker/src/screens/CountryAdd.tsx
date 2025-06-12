@@ -6,7 +6,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import api from '../services/api';
 
 const styles = StyleSheet.create({
-  container: {
+container: {
     flex: 1,
     backgroundColor: '#e8def8',
     padding: 20,
@@ -65,23 +65,21 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function CountryEdit({ navigation, route }) {
-  const { country } = route.params;
-
-  const [countryName, setCountryName] = useState(country.country_name);
-  const [countryContinent, setCountryContinent] = useState(country.continent);
+export default function CountryAdd({ navigation }) {
+  const [countryName, setCountryName] = useState('');
+  const [countryContinent, setCountryContinent] = useState('');
   const [isFocus, setIsFocus] = useState(false);
 
-  const handleUpdate = async () => {
+  const handleAdding = async () => {
     try {
-      await api.put(`/country/${country.id}`, {
+      await api.post('/country', {
         country_name: countryName,
         continent: countryContinent,
       });
-      console.log("Country updated!");
+      console.log('Country added!');
       navigation.navigate('Countries');
     } catch (error) {
-      console.error("Error updating country:", error);
+      console.error('Error adding country:', error);
     }
   };
 
@@ -97,7 +95,7 @@ export default function CountryEdit({ navigation, route }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Edit Country</Text>
+      <Text style={styles.title}>Add a Country</Text>
       <View style={styles.card}>
         <View style={styles.cardContent}>
           <Text style={styles.label}>Country Name:</Text>
@@ -129,18 +127,15 @@ export default function CountryEdit({ navigation, route }) {
               setIsFocus(false);
             }}
           />
-
-          <Text style={styles.label}>Country ID:</Text>
-          <Text style={styles.value}>{country.id}</Text>
         </View>
       </View>
 
       <Button
         mode="contained"
-        onPress={handleUpdate}
+        onPress={handleAdding}
         style={{ marginBottom: 12 }}
       >
-        Save Changes
+        Save Country
       </Button>
 
       <Button

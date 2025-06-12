@@ -128,6 +128,7 @@ return (
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
+      <Button onPress={() => navigation.navigate('CountryAdd')}>Add a Country</Button>
         <View style={styles.innerContainer}>
           {countries.map((country) => (
             <View key={country.id} style={styles.card}>
