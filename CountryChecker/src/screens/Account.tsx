@@ -84,7 +84,6 @@ useEffect(() => {
       await AsyncStorage.multiRemove(['userToken', 'id', 'firstname', 'lastname', 'email', 'age']);
       console.log('User data removed from AsyncStorage');
       setIsLoggedIn(false);
-      navigation.navigate('Login');
     } catch (error) {
       console.error('Error during logout:', error);
       Alert.alert('Logout Error', 'Something went wrong while logging out.');
