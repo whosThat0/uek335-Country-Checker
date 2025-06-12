@@ -1,16 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import {
   Text,
   Card,
   useTheme,
   IconButton,
-  Button,
 } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { getCurrentUser } from '../services/UserService';
 
 const styles = StyleSheet.create({
   root: {
@@ -42,27 +41,44 @@ const styles = StyleSheet.create({
   },
 });
 
-
 export default function Account({ navigation, setIsLoggedIn }) {
   const theme = useTheme();
 
-  const user = {
-    email: 'JohnDoe@gmail.com',
-    firstName: 'John',
-    lastName: 'Doe',
-    gender: 'female',
-    birthdate: '18/07/2025',
-  };
+  const [user, setUser] = useState({
+    email: '',
+    firstName: '',
+    lastName: '',
+    age: '',
+  });
 
-const handleLogout = async () => {
-  try {
-    await AsyncStorage.removeItem('userToken');
-    console.log('Benutzerdaten entfernt');
-    setIsLoggedIn(false);
-  } catch (error) {
-    console.error('Fehler beim Logout:', error);
-  }
-};
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const currentUser = await getCurrentUser();
+        if (currentUser && currentUser.data && currentUser.data.user) {
+          setUser({
+            email: currentUser.data.user.email,
+            firstName: currentUser.data.user.firstname,
+            lastName: currentUser.data.user.lastname,
+            age: currentUser.data.user.birthday,
+          });
+        }
+      } catch (error) {
+        console.error('Failed to fetch user:', error);
+      }
+    };
+    fetchUser();
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await AsyncStorage.removeItem('userToken');
+      console.log('Userdata removed from AsyncStorage');
+      setIsLoggedIn(false);
+    } catch (error) {
+      console.error('Error during logout:', error);
+    }
+  };
 
   return (
     <SafeAreaView style={[styles.root, { backgroundColor: theme.colors.secondaryContainer }]}>
