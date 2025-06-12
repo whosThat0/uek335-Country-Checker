@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 import {
   Text,
   Card,
@@ -9,7 +9,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getCurrentUser } from '../services/UserService';
+import { getUser } from '../services/UserService'; // no need for getCurrentUser here
 
 const styles = StyleSheet.create({
   root: {
@@ -28,11 +28,11 @@ const styles = StyleSheet.create({
   card: {
     width: '100%',
     borderRadius: 12,
-    paddingTop: 16
+    paddingTop: 16,
   },
   cardTitle: {
     fontSize: 22,
-    marginTop: 10, 
+    marginTop: 10,
     marginBottom: 30,
   },
   actions: {
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function Account({ navigation, setIsLoggedIn }) {
+export default function Account({ navigation, setIsLoggedIn = () => {} }) {
   const theme = useTheme();
 
   const [user, setUser] = useState({
@@ -51,32 +51,43 @@ export default function Account({ navigation, setIsLoggedIn }) {
     age: '',
   });
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const currentUser = await getCurrentUser();
-        if (currentUser && currentUser.data && currentUser.data.user) {
-          setUser({
-            email: currentUser.data.user.email,
-            firstName: currentUser.data.user.firstname,
-            lastName: currentUser.data.user.lastname,
-            age: currentUser.data.user.birthday,
-          });
-        }
-      } catch (error) {
-        console.error('Failed to fetch user:', error);
-      }
-    };
-    fetchUser();
-  }, []);
+useEffect(() => {
+  const fetchUserFromStorage = async () => {
+    try {
+      const [email, firstName, lastName, age] = await Promise.all([
+        AsyncStorage.getItem("email"),
+        AsyncStorage.getItem("firstname"),
+        AsyncStorage.getItem("lastname"),
+        AsyncStorage.getItem("age"),
+      ]);
+
+      setUser({
+        email: email || '',
+        firstName: firstName || '',
+        lastName: lastName || '',
+        age: age || '',
+      });
+
+      console.log("Loaded user from AsyncStorage:", { email, firstName, lastName, age });
+    } catch (err) {
+      console.error("Error loading user data:", err);
+    }
+  };
+
+  fetchUserFromStorage();
+}, []);
+
+
 
   const handleLogout = async () => {
     try {
-      await AsyncStorage.removeItem('userToken');
-      console.log('Userdata removed from AsyncStorage');
+      await AsyncStorage.multiRemove(['userToken', 'id', 'firstname', 'lastname', 'email', 'age']);
+      console.log('User data removed from AsyncStorage');
       setIsLoggedIn(false);
+      navigation.navigate('Login');
     } catch (error) {
       console.error('Error during logout:', error);
+      Alert.alert('Logout Error', 'Something went wrong while logging out.');
     }
   };
 
@@ -104,9 +115,10 @@ export default function Account({ navigation, setIsLoggedIn }) {
   );
 }
 
-const InfoLabel = ({ label, value }: { label: string; value: string }) => (
+const InfoLabel = ({ label, value }) => (
   <View style={{ marginBottom: 35 }}>
     <Text style={{ fontSize: 15, color: '#555' }}>{label}</Text>
     <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{value}</Text>
   </View>
 );
+
