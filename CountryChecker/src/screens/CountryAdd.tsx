@@ -77,7 +77,7 @@ export default function CountryAdd({ navigation }) {
         continent: countryContinent,
       });
       console.log('Country added!');
-      navigation.navigate('Countries');
+     navigation.navigate('MainTabs', { screen: 'Countries' });
     } catch (error) {
       console.error('Error adding country:', error);
     }
