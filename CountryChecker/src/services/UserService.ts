@@ -5,7 +5,7 @@ export interface User {
   firstname: string;
   lastname: string;
   email: string;
-  birthday: string;
+  age: string;
   password: string;
 }
 
@@ -20,7 +20,7 @@ export interface UserResponse {
     firstname: string;
     lastname: string;
     email: string;
-    birthday: string;
+    age: string;
     id: number;
   };
 }
@@ -30,6 +30,7 @@ export const loginUser = async (credentials: LoginRequest) => {
     email: credentials.email,
     password: credentials.password,
   });
+  console.log(token.data);
   await AsyncStorage.setItem("token", token.data.accessToken);
   await AsyncStorage.setItem("id", String(token.data.user.id));
   return token.data;

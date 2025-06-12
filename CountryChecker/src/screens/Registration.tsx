@@ -129,16 +129,26 @@ export default function Signup({ navigation, setIsLoggedIn }) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
+       body: JSON.stringify({
+        email,
+        password,
+        firstname: firstName,
+        lastname: lastName,
+        age,
+      }),
       });
 
       const data = await response.json();
+      console.log("Signup response:", data);
 
       if (response.ok && data.accessToken) {
         await AsyncStorage.setItem("@access_token", data.accessToken);
+        await AsyncStorage.setItem("@access_token", data.accessToken);
+        await AsyncStorage.setItem("email", email);
+        await AsyncStorage.setItem("firstname", firstName);
+        await AsyncStorage.setItem("lastname", lastName);
+        await AsyncStorage.setItem("age", age);
+
         Alert.alert("Signup Successful", `Welcome, ${email}!`);
         setIsLoggedIn(true);
       } else {
