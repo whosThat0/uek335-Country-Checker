@@ -8,6 +8,7 @@ import Account from '../screens/Account';
 import Countries from '../screens/Countries';
 import CountryDetails from '../screens/CountryDetails';
 import CountryEdit from '../screens/CountryEdit';
+import CountryAdd from '../screens/CountryAdd';
 
 const Stack = createNativeStackNavigator();
 export default function AppNavigator({ isLoggedIn, setIsLoggedIn }) {
@@ -32,6 +33,7 @@ export default function AppNavigator({ isLoggedIn, setIsLoggedIn }) {
             <Stack.Screen name="Countries" component={Countries} />
             <Stack.Screen name="CountryDetails" component={CountryDetails} />
             <Stack.Screen name="CountryEdit" component={CountryEdit} />
+            <Stack.Screen name="CountryAdd" component={CountryAdd} />
           </>
         )}
       </Stack.Navigator>
