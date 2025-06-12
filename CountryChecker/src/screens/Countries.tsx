@@ -91,13 +91,13 @@ export default function Countries({ navigation }) {
   };
 
     const deleteCountry = async (id: number): Promise<void> => {
-  try {
-    await api.delete(`/country/${id}`);
-    console.log(`Deleted Country with ID: ${id}`);
-    fetchCountries();
-  } catch (error) {
-    console.error("Error deleting country:", error);
-  }
+    try {
+      await api.delete(`/country/${id}`);
+      console.log(`Deleted Country with ID: ${id}`);
+      fetchCountries();
+    } catch (error) {
+      console.error("Error deleting country:", error);
+    }
 };
 
   
@@ -115,7 +115,6 @@ const confirmDelete = (id: number) => {
     ]
   );
 };
-
 
   React.useEffect(() => {
     fetchCountries();
@@ -136,7 +135,7 @@ return (
                 <Text style={styles.name}>{country.country_name}</Text>
                 <View style={styles.iconContainer}>
                   <Ionicons name="information-circle-outline" size={20} color="#000000"  onPress={() => navigation.navigate('CountryDetails', { country })}/>
-                  <Ionicons name="pencil-outline" size={20} color="#000000" onPress={() => console.log ("Country Edited")} />
+                  <Ionicons name="pencil-outline" size={20} color="#000000" onPress={() => navigation.navigate('CountryEdit', {country})} />
                   <Ionicons name="trash-outline" size={20} color="#000000" onPress={() => confirmDelete(country.id)} />
                 </View>
               </View>
