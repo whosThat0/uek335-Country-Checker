@@ -4,6 +4,8 @@ import { Button, Card, useTheme } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import api from '../services/api';
+import { Alert } from 'react-native';
+
 
 const styles = StyleSheet.create({
   container: {
@@ -59,6 +61,9 @@ const styles = StyleSheet.create({
   },
 });
 
+
+
+
 export default function Countries({ navigation }) {
   const theme = useTheme();
   const [countries, setCountries] = React.useState([]);
@@ -71,6 +76,33 @@ export default function Countries({ navigation }) {
       console.error('Error fetching countries:', error);
     }
   };
+
+  const deleteCountry = async (id: number): Promise<void> => {
+  try {
+    await api.delete(`/country/${id}`);
+    console.log(`Deleted Country with ID: ${id}`);
+    fetchCountries();
+  } catch (error) {
+    console.error("Error deleting country:", error);
+  }
+};
+
+  
+const confirmDelete = (id: number) => {
+  Alert.alert(
+    "Delete Country",
+    "Are you sure you want to delete this country?",
+    [
+      { text: "Cancel", style: "cancel" },
+      {
+        text: "Delete",
+        style: "destructive",
+        onPress: () => deleteCountry(id),
+      },
+    ]
+  );
+};
+
 
   React.useEffect(() => {
     fetchCountries();
@@ -91,9 +123,9 @@ return (
             <View style={styles.cardHeader}>
               <Text style={styles.name}>{country.country_name}</Text>
               <View style={styles.iconContainer}>
-                <Ionicons name="information-circle" size={20} color="#000000"  onPress={() => navigation.navigate('CountryDetails', { country })}/>
-                <Ionicons name="checkmark" size={20} color="#000000" onPress={() => console.log("Country genehmigt:", country.id)} />
-                <Ionicons name="trash" size={20} color="#000000" onPress={() => console.log("Country gelöscht:", country.id)} />
+                <Ionicons name="information-circle-outline" size={20} color="#000000"  onPress={() => navigation.navigate('CountryDetails', { country })}/>
+                <Ionicons name="pencil-outline" size={20} color="#000000" onPress={() => console.log ("Country Edited")} />
+                <Ionicons name="trash-outline" size={20} color="#000000" onPress={() => confirmDelete(country.id)} />
               </View>
             </View>
             <Text style={styles.id}>ID: {country.id}</Text>
