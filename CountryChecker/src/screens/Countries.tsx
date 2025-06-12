@@ -7,14 +7,13 @@ import api from '../services/api';
 import { Chip } from 'react-native-paper';
 import { Searchbar } from 'react-native-paper';
 
-
 const styles = StyleSheet.create({
-  container: {
+  pageContainer: {
     flex: 1,
     backgroundColor: '#e8def8',
     position: 'relative',
   },
-  title: {
+  pageHeader: {
     fontSize: 22,
     marginTop: 20,
     marginBottom: 20,
@@ -27,11 +26,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingBottom: 100,
   },
-  innerContainer: {
+  innerContainerCountryData: {
     width: '100%',
     alignItems: 'center',
   },
-  card: {
+  countryCard: {
     backgroundColor: '#fff',
     padding: 12,
     marginBottom: 12,
@@ -47,7 +46,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  name: {
+  cardName: {
     fontSize: 16,
     fontWeight: 'bold',
   },
@@ -60,7 +59,7 @@ const styles = StyleSheet.create({
     color: '#666',
     marginTop: 4,
   },
-  fab: {
+  addCountry: {
     position: 'absolute',
     right: 24,
     bottom: 60,
@@ -72,7 +71,7 @@ const styles = StyleSheet.create({
     elevation: 4,
     zIndex: 10,
   },
-  chip: {
+  filterChip: {
     backgroundColor: '#f0f0f0',
     alignSelf: 'flex-start',
     marginRight: 8,
@@ -138,8 +137,8 @@ export default function Countries({ navigation }) {
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Countries</Text>
+    <SafeAreaView style={styles.pageContainer}>
+      <Text style={styles.pageHeader}>Countries</Text>
       <Searchbar
         placeholder="Search"
         style={{ margin: 16, borderRadius: 8, backgroundColor: theme.colors.surface, height: 48 }}
@@ -151,7 +150,7 @@ export default function Countries({ navigation }) {
         {['Europe', 'Africa', 'North America', 'South America', 'Antarctica', 'Asia', 'Australia'].map((region) => (
           <Chip
         key={region}
-        style={styles.chip}
+        style={styles.filterChip}
         selected={selectedRegions.includes(region)}
         onPress={() => {
           setSelectedRegions((prev) =>
@@ -170,11 +169,11 @@ export default function Countries({ navigation }) {
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        <View style={styles.innerContainer}>
+        <View style={styles.innerContainerCountryData}>
           {filteredCountries.map((country) => (
-            <View key={country.id} style={styles.card}>
+            <View key={country.id} style={styles.countryCard}>
               <View style={styles.cardHeader}>
-                <Text style={styles.name}>{country.country_name}</Text>
+                <Text style={styles.cardName}>{country.country_name}</Text>
                 <View style={styles.iconContainer}>
                   <Ionicons name="information-circle-outline" size={20} color="#000000" onPress={() => navigation.navigate('CountryDetails', { country })} />
                   <Ionicons name="pencil-outline" size={20} color="#000000" onPress={() => navigation.navigate('CountryEdit', { country })} />
@@ -190,7 +189,7 @@ export default function Countries({ navigation }) {
       <Button
         mode="contained"
         compact
-        style={styles.fab}
+        style={styles.addCountry}
         buttonColor={theme.colors.primary}
         onPress={() => navigation.navigate('CountryAdd')}
         contentStyle={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}

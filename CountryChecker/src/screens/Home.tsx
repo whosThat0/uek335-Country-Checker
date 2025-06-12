@@ -5,13 +5,13 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native';
 
 const styles = StyleSheet.create({
-  container: {
+  pageContainer: {
     flex: 1,
     padding: 12,
     alignItems: 'center',
     paddingBottom: 100
   },
-  title: {
+  pageHeader: {
     marginTop: 70,
     fontSize: 22,
   },
@@ -53,9 +53,9 @@ const Home = ({ navigation }) => {
 
   return (
     <SafeAreaProvider>
-      <ScrollView contentContainerStyle={[styles.container, { backgroundColor: theme.colors.secondaryContainer }]}>
-      <View style={styles.container}>
-        <Title style={styles.title}>CountryCruxCH</Title>
+      <ScrollView contentContainerStyle={[styles.pageContainer, { backgroundColor: theme.colors.secondaryContainer }]}>
+      <View style={styles.pageContainer}>
+        <Title style={styles.pageHeader}>CountryCruxCH</Title>
 
         <Card style={styles.card}>
           <Card.Content>

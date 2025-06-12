@@ -6,18 +6,18 @@ import { Dropdown } from 'react-native-element-dropdown';
 import api from '../services/api';
 
 const styles = StyleSheet.create({
-  container: {
+  pageContainer: {
     flex: 1,
     backgroundColor: '#e8def8',
     padding: 20,
   },
-  title: {
+  pageHeader: {
     fontSize: 26,
     fontWeight: 'bold',
     color: '#333',
     marginBottom: 12,
   },
-  label: {
+  textInputFieldLabel: {
     fontSize: 16,
     color: '#666',
     marginTop: 12,
@@ -96,11 +96,11 @@ export default function CountryEdit({ navigation, route }) {
   ];
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Edit Country</Text>
+    <SafeAreaView style={styles.pageContainer}>
+      <Text style={styles.pageHeader}>Edit Country</Text>
       <View style={styles.card}>
         <View style={styles.cardContent}>
-          <Text style={styles.label}>Country Name:</Text>
+          <Text style={styles.textInputFieldLabel}>Country Name:</Text>
           <TextInput
             value={countryName}
             onChangeText={setCountryName}
@@ -108,7 +108,7 @@ export default function CountryEdit({ navigation, route }) {
             mode="flat"
           />
 
-          <Text style={styles.label}>Country Continent:</Text>
+          <Text style={styles.textInputFieldLabel}>Country Continent:</Text>
           <Dropdown
             style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
             placeholderStyle={styles.placeholderStyle}
@@ -130,7 +130,7 @@ export default function CountryEdit({ navigation, route }) {
             }}
           />
 
-          <Text style={styles.label}>Country ID:</Text>
+          <Text style={styles.textInputFieldLabel}>Country ID:</Text>
           <Text style={styles.value}>{country.id}</Text>
         </View>
       </View>

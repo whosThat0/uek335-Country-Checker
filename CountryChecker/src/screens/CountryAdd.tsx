@@ -6,23 +6,23 @@ import { Dropdown } from 'react-native-element-dropdown';
 import api from '../services/api';
 
 const styles = StyleSheet.create({
-container: {
+pageContainer: {
     flex: 1,
     backgroundColor: '#e8def8',
     padding: 20,
   },
-  title: {
+  pageHeader: {
     fontSize: 22,
     marginTop: 15,
     marginBottom: 20,
     alignSelf: 'center',
   },
-  label: {
+  textInputFieldLabel: {
     fontSize: 16,
     color: '#666',
     marginTop: 12,
   },
-  value: {
+  nameValue: {
     fontSize: 18,
     color: '#000',
     backgroundColor: '#fff',
@@ -63,7 +63,7 @@ container: {
     height: 40,
     fontSize: 16,
   },
-      button: {
+  button: {
     alignSelf: 'flex-start',
     marginBottom: 10,
     elevation: 4,
@@ -112,19 +112,19 @@ export default function CountryAdd({ navigation }) {
   ];
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Add a Country</Text>
+    <SafeAreaView style={styles.pageContainer}>
+      <Text style={styles.pageHeader}>Add a Country</Text>
       <View style={styles.card}>
         <View style={styles.cardContent}>
-          <Text style={styles.label}>Country Name:</Text>
+          <Text style={styles.textInputFieldLabel}>Country Name:</Text>
           <TextInput
             value={countryName}
             onChangeText={setCountryName}
-            style={styles.value}
+            style={styles.nameValue}
             mode="flat"
           />
 
-          <Text style={styles.label}>Country Continent:</Text>
+          <Text style={styles.textInputFieldLabel}>Country Continent:</Text>
           <Dropdown
             style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
             placeholderStyle={styles.placeholderStyle}

@@ -6,7 +6,8 @@ import {
   Button,
   Alert,
   ActivityIndicator,
-  TouchableOpacity
+  TouchableOpacity,
+  StyleSheet
 } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -15,12 +16,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 import type { ViewStyle, TextStyle } from "react-native";
 
-const style: {
-  errorMessage: TextStyle;
-  button: ViewStyle;
-  textField: ViewStyle;
-  title: TextStyle;
-} = {
+const styles = StyleSheet.create({
   errorMessage: {
     color: "red",
     fontSize: 10,
@@ -45,7 +41,7 @@ const style: {
     fontWeight: "light",
     marginBottom: 20,
   },
-};
+});
 
 export default function Signup({ navigation, setIsLoggedIn }) {
   const theme = useTheme(); 
@@ -157,13 +153,13 @@ export default function Signup({ navigation, setIsLoggedIn }) {
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1, padding: 16, backgroundColor: theme.colors.secondaryContainer }}>
         <View style={{ alignItems: "center", marginTop: 20 }}>
-          <Text style={style.title}>Registration</Text>
+          <Text style={styles.title}>Registration</Text>
         </View>
 <TextInput
   label="Email"
   value={email}
   onChangeText={handleEmailChange}
-  style={style.textField}
+  style={styles.textField}
   autoCapitalize="none"
   right={
     email.length > 0 ? (
@@ -174,14 +170,14 @@ export default function Signup({ navigation, setIsLoggedIn }) {
     ) : null
   }
 />
-{emailError ? <Text style={style.errorMessage}>{emailError}</Text> : null}
+{emailError ? <Text style={styles.errorMessage}>{emailError}</Text> : null}
 
 <TextInput
   label="Password"
   value={password}
   onChangeText={handlePasswordChange}
   secureTextEntry
-  style={style.textField}
+  style={styles.textField}
   right={
     password.length > 0 ? (
       <TextInput.Icon
@@ -191,13 +187,13 @@ export default function Signup({ navigation, setIsLoggedIn }) {
     ) : null
   }
 />
-{passwordError ? <Text style={style.errorMessage}>{passwordError}</Text> : null}
+{passwordError ? <Text style={styles.errorMessage}>{passwordError}</Text> : null}
 
 <TextInput
   label="First Name"
   value={firstName}
   onChangeText={handleFirstNameChange}
-  style={style.textField}
+  style={styles.textField}
   right={
     firstName.length > 0 ? (
       <TextInput.Icon
@@ -207,13 +203,13 @@ export default function Signup({ navigation, setIsLoggedIn }) {
     ) : null
   }
 />
-{firstNameError ? <Text style={style.errorMessage}>{firstNameError}</Text> : null}
+{firstNameError ? <Text style={styles.errorMessage}>{firstNameError}</Text> : null}
 
 <TextInput
   label="Last Name"
   value={lastName}
   onChangeText={handleLastNameChange}
-  style={style.textField}
+  style={styles.textField}
   right={
     lastName.length > 0 ? (
       <TextInput.Icon
@@ -223,14 +219,14 @@ export default function Signup({ navigation, setIsLoggedIn }) {
     ) : null
   }
 />
-{lastNameError ? <Text style={style.errorMessage}>{lastNameError}</Text> : null}
+{lastNameError ? <Text style={styles.errorMessage}>{lastNameError}</Text> : null}
 
 <TextInput
   label="Age"
   value={age}
   onChangeText={handleAgeChange}
   keyboardType="numeric"
- style={style.textField}
+  style={styles.textField}
   right={
     age.length > 0 ? (
       <TextInput.Icon
@@ -240,7 +236,7 @@ export default function Signup({ navigation, setIsLoggedIn }) {
     ) : null
   }
 />
-{ageError ? <Text style={style.errorMessage}>{ageError}</Text> : null}
+{ageError ? <Text style={styles.errorMessage}>{ageError}</Text> : null}
 
 <View style={{ flexDirection: "row", justifyContent: "flex-start", marginVertical: 16 }}>
   <Text style={{ fontSize: 12, color: "#222" }}>Already have an account? </Text>

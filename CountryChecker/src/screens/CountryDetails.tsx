@@ -4,18 +4,18 @@ import { Button, useTheme } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const styles = StyleSheet.create({
-  container: {
+  pageContainer: {
     flex: 1,
     backgroundColor: '#e8def8',
     padding: 16,
   },
-  title: {
+  pageHeader: {
     fontSize: 22,
     marginTop: 60,
     marginBottom: 20,
     alignSelf: 'center',
   },
-  label: {
+  textInputFieldLabel: {
     fontSize: 16,
     color: '#666',
     marginTop: 12,
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#000',
   },
-  card: {
+  countryCard: {
     backgroundColor: '#fff',
     borderRadius: 12,
     elevation: 2,
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   cardContent: {
     padding: 12,
   },
-    button: {
+  backButton: {
     alignSelf: 'flex-start',
     marginBottom: 10,
     elevation: 4,
@@ -47,21 +47,21 @@ export default function CountryDetails({ route, navigation }) {
   const { country } = route.params;
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Country Details</Text>
-      <View style={styles.card}>
+    <SafeAreaView style={styles.pageContainer}>
+      <Text style={styles.pageHeader}>Country Details</Text>
+      <View style={styles.countryCard}>
         <View style={styles.cardContent}>
-          <Text style={styles.label}>Country Name:</Text>
+          <Text style={styles.textInputFieldLabel}>Country Name:</Text>
           <Text style={styles.value}>{country.country_name}</Text>
 
-          <Text style={styles.label}>Country ID:</Text>
+          <Text style={styles.textInputFieldLabel}>Country ID:</Text>
           <Text style={styles.value}>{country.id}</Text>
         </View>
       </View>
     <Button
               mode="contained"
               onPress={() => navigation.navigate('MainTabs', { screen: 'Countries' })}
-              style={styles.button}
+              style={styles.backButton}
               buttonColor={theme.colors.primary}
             >
               Back to all the countries

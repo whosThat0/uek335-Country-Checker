@@ -1,6 +1,20 @@
 import React, { useState } from 'react';
+import { StyleSheet } from 'react-native';
 import { BottomNavigation } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
+
+const styles = StyleSheet.create({
+  bottomNavigation: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: '#fff',
+    elevation: 8,
+    borderTopWidth: 1,
+    borderTopColor: '#eee',
+  }
+});
 
 const AppBar = () => {
   const navigation = useNavigation();
@@ -23,16 +37,7 @@ const AppBar = () => {
       renderScene={() => null}
       shifting={false}
       labeled={true}
-      style={{
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: '#fff',
-        elevation: 8,
-        borderTopWidth: 1,
-        borderTopColor: '#eee',
-      }}
+      style={styles.bottomNavigation}
     />
   );
 };

@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   TextStyle,
   ViewStyle,
+  StyleSheet,
 } from "react-native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -16,12 +17,7 @@ import { useNavigation } from "@react-navigation/native";
 import { TextInput, useTheme } from "react-native-paper";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
-const style: {
-  errorMessage: TextStyle;
-  button: ViewStyle;
-  textField: ViewStyle;
-  title: TextStyle;
-} = {
+const styles = StyleSheet.create({
   button: {
     backgroundColor: "#007bff",
     padding: 12,
@@ -46,7 +42,12 @@ const style: {
     marginTop: -4,
     marginBottom: 4,
   },
-};
+  signUpButton: {
+    fontSize: 12,
+    color: "#007bff",
+    fontWeight: "bold" 
+  }
+});
 
 export default function Login({ navigation, setIsLoggedIn }) {
    const theme = useTheme(); 
@@ -89,14 +90,14 @@ export default function Login({ navigation, setIsLoggedIn }) {
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1, padding: 16, backgroundColor: theme.colors.secondaryContainer }}>
         <View style={{ alignItems: "center", marginTop: 20 }}>
-          <Text style={style.title}>Login</Text>
+          <Text style={styles.title}>Login</Text>
         </View>
 
   <TextInput
     label="Email"
     value={email}
     onChangeText={setEmail}
-    style={style.textField}
+    style={styles.textField}
     autoCapitalize="none"
     right={
     email.length > 0 ? (
@@ -118,7 +119,7 @@ export default function Login({ navigation, setIsLoggedIn }) {
           onChangeText={setPassword}
           value={password}
           secureTextEntry
-          style={style.textField}
+          style={styles.textField}
           right={
             password.length > 0 ? (
               <TextInput.Icon
@@ -132,7 +133,7 @@ export default function Login({ navigation, setIsLoggedIn }) {
        <View style={{ flexDirection: "row", justifyContent: "flex-start", marginVertical: 16 }}>
          <Text style={{ fontSize: 12, color: "#222" }}>Haven't got an account yet? </Text>
          <Text
-           style={{ fontSize: 12, color: "#007bff", fontWeight: "bold" }}
+           style={styles.signUpButton}
            onPress={() => navigation.navigate("Registration")}
          >
            sign up
