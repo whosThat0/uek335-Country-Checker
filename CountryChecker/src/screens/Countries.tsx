@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text,  ScrollView, View, StyleSheet } from 'react-native';
+import { Text,  ScrollView, View, StyleSheet, Alert } from 'react-native';
 import { Button, Card, useTheme } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -90,6 +90,33 @@ export default function Countries({ navigation }) {
     }
   };
 
+    const deleteCountry = async (id: number): Promise<void> => {
+  try {
+    await api.delete(`/country/${id}`);
+    console.log(`Deleted Country with ID: ${id}`);
+    fetchCountries();
+  } catch (error) {
+    console.error("Error deleting country:", error);
+  }
+};
+
+  
+const confirmDelete = (id: number) => {
+  Alert.alert(
+    "Delete Country",
+    "Are you sure you want to delete this country?",
+    [
+      { text: "Cancel", style: "cancel" },
+      {
+        text: "Delete",
+        style: "destructive",
+        onPress: () => deleteCountry(id),
+      },
+    ]
+  );
+};
+
+
   React.useEffect(() => {
     fetchCountries();
   }, []);
@@ -97,8 +124,6 @@ export default function Countries({ navigation }) {
 return (
   <SafeAreaView style={styles.container}>
     <Text style={styles.title}>Countries</Text>
-
-    <View style={styles.listContainer}>
       <ScrollView
         style={styles.scroll}
         contentContainerStyle={styles.scrollContent}
@@ -110,9 +135,9 @@ return (
               <View style={styles.cardHeader}>
                 <Text style={styles.name}>{country.country_name}</Text>
                 <View style={styles.iconContainer}>
-                  <Ionicons name="information-circle" size={20} color="#000000"  onPress={() => navigation.navigate('CountryDetails', { country })}/>
-                  <Ionicons name="checkmark" size={20} color="#000000" onPress={() => console.log("Country genehmigt:", country.id)} />
-                  <Ionicons name="trash" size={20} color="#000000" onPress={() => console.log("Country gelöscht:", country.id)} />
+                  <Ionicons name="information-circle-outline" size={20} color="#000000"  onPress={() => navigation.navigate('CountryDetails', { country })}/>
+                  <Ionicons name="pencil-outline" size={20} color="#000000" onPress={() => console.log ("Country Edited")} />
+                  <Ionicons name="trash-outline" size={20} color="#000000" onPress={() => confirmDelete(country.id)} />
                 </View>
               </View>
               <Text style={styles.id}>ID: {country.id}</Text>
@@ -120,11 +145,6 @@ return (
           ))}
         </View>
       </ScrollView>
-    </View>
-
-    <Text style={styles.infoText}>
-      Und hier steht noch ein Text unter der Liste!
-    </Text>
   </SafeAreaView>
 );
 }
