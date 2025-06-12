@@ -82,8 +82,15 @@ const styles = StyleSheet.create({
 
 export default function Countries({ navigation }) {
   const theme = useTheme();
-  const [countries, setCountries] = React.useState([]);
+  type Country = {
+    id: number;
+    country_name: string;
+    continent: string;
+  };
+
+  const [countries, setCountries] = React.useState<Country[]>([]);
   const [searchQuery, setSearchQuery] = React.useState('');
+  const [selectedRegions, setSelectedRegions] = React.useState<string[]>([]);
 
   const fetchCountries = async () => {
     try {
@@ -94,9 +101,12 @@ export default function Countries({ navigation }) {
     }
   };
 
-    const filteredCountries = countries.filter((country) =>
-    country.country_name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+    const filteredCountries = countries.filter((country) => {
+    const matchesSearch = country.country_name.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesRegion =
+      selectedRegions.length === 0 || selectedRegions.includes(country.continent);
+    return matchesSearch && matchesRegion;
+  });
 
   const deleteCountry = async (id: number): Promise<void> => {
     try {
@@ -136,37 +146,24 @@ export default function Countries({ navigation }) {
         onChangeText={setSearchQuery}
         value={searchQuery}
       />
+
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginLeft: 16, marginBottom: 20 }}>
-        <Chip
-          icon="close"
-          style={styles.chip}
-        >
-          Europe
-        </Chip>
-        <Chip
-          icon="close"
-          style={styles.chip}
-        >
-          Afrika
-        </Chip>
-        <Chip
-          icon="close"
-          style={styles.chip}
-        >
-          Amerika
-        </Chip>
-        <Chip
-          icon="close"
-          style={styles.chip }
-        >
-          Asien
-        </Chip>
-        <Chip
-          icon="close"
-          style={styles.chip}
-        >
-          Antarktis
-        </Chip>
+        {['Europe', 'Africa', 'North America', 'South America', 'Antarctica', 'Asia', 'Australia'].map((region) => (
+          <Chip
+        key={region}
+        style={styles.chip}
+        selected={selectedRegions.includes(region)}
+        onPress={() => {
+          setSelectedRegions((prev) =>
+            prev.includes(region)
+          ? prev.filter((r) => r !== region)
+          : [...prev, region]
+          );
+        }}
+          >
+        {region}
+          </Chip>
+        ))}
       </View>
       <ScrollView
         style={styles.scroll}
@@ -185,6 +182,7 @@ export default function Countries({ navigation }) {
                 </View>
               </View>
               <Text style={styles.id}>ID: {country.id}</Text>
+              <Text style={styles.id}>Continent: {country.continent}</Text>
             </View>
           ))}
         </View>
