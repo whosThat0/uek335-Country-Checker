@@ -4,6 +4,7 @@ import { Button, useTheme } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import api from '../services/api';
+import { Chip } from 'react-native-paper';
 import { Searchbar } from 'react-native-paper';
 
 
@@ -71,6 +72,12 @@ const styles = StyleSheet.create({
     elevation: 4,
     zIndex: 10,
   },
+  chip: {
+    backgroundColor: '#f0f0f0',
+    alignSelf: 'flex-start',
+    marginRight: 8,
+    marginBottom: 8
+  }
 });
 
 export default function Countries({ navigation }) {
@@ -129,6 +136,38 @@ export default function Countries({ navigation }) {
         onChangeText={setSearchQuery}
         value={searchQuery}
       />
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginLeft: 16, marginBottom: 20 }}>
+        <Chip
+          icon="close"
+          style={styles.chip}
+        >
+          Europe
+        </Chip>
+        <Chip
+          icon="close"
+          style={styles.chip}
+        >
+          Afrika
+        </Chip>
+        <Chip
+          icon="close"
+          style={styles.chip}
+        >
+          Amerika
+        </Chip>
+        <Chip
+          icon="close"
+          style={styles.chip }
+        >
+          Asien
+        </Chip>
+        <Chip
+          icon="close"
+          style={styles.chip}
+        >
+          Antarktis
+        </Chip>
+      </View>
       <ScrollView
         style={styles.scroll}
         contentContainerStyle={styles.scrollContent}
