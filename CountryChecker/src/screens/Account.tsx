@@ -52,19 +52,31 @@ export default function Account({ navigation, setIsLoggedIn = () => {} }) {
   });
 
 useEffect(() => {
-  const fetchUser = async () => {
-    const user = await getUser();
-    console.log("User fetched:", user);
-    setUser({
-      email: user?.email || '',
-      firstName: user?.firstname || '',
-      lastName: user?.lastname || '',
-      age: user?.age || '',
-    });
+  const fetchUserFromStorage = async () => {
+    try {
+      const [email, firstName, lastName, age] = await Promise.all([
+        AsyncStorage.getItem("email"),
+        AsyncStorage.getItem("firstname"),
+        AsyncStorage.getItem("lastname"),
+        AsyncStorage.getItem("age"),
+      ]);
+
+      setUser({
+        email: email || '',
+        firstName: firstName || '',
+        lastName: lastName || '',
+        age: age || '',
+      });
+
+      console.log("Loaded user from AsyncStorage:", { email, firstName, lastName, age });
+    } catch (err) {
+      console.error("Error loading user data:", err);
+    }
   };
 
-  fetchUser();
+  fetchUserFromStorage();
 }, []);
+
 
 
   const handleLogout = async () => {
