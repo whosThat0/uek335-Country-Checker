@@ -28,13 +28,13 @@ const styles = StyleSheet.create({
   },
   card: {
     width: '100%',
-    maxWidth: 350,
     borderRadius: 12,
-    paddingBottom: 8,
+    paddingTop: 16
   },
   cardTitle: {
-    fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 22,
+    marginTop: 10, 
+    marginBottom: 30,
   },
   actions: {
     justifyContent: 'flex-end',
@@ -81,7 +81,6 @@ const handleLogout = async () => {
           </Card.Content>
 
           <Card.Actions style={styles.actions}>
-            <Button onPress={handleLogout}>Log out</Button>
             <IconButton icon="logout" size={20} onPress={handleLogout} />
           </Card.Actions>
         </Card>
@@ -93,6 +92,6 @@ const handleLogout = async () => {
 const InfoLabel = ({ label, value }: { label: string; value: string }) => (
   <View style={{ marginBottom: 35 }}>
     <Text style={{ fontSize: 15, color: '#555' }}>{label}</Text>
-    <Text style={{ fontWeight: 'bold', fontSize: 14 }}>{value}</Text>
+    <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{value}</Text>
   </View>
 );
