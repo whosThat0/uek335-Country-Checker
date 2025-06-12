@@ -92,21 +92,26 @@ export default function Login({ navigation, setIsLoggedIn }) {
           <Text style={style.title}>Login</Text>
         </View>
 
-          <TextInput
-            label="Email"
-            value={email}
-            onChangeText={setEmail}
-            style={style.textField}
-            autoCapitalize="none"
-            right={
-            email.length > 0 ? (
-              <TextInput.Icon
-                icon={() => <MaterialCommunityIcons name="close" size={20} />}
-                onPress={() => setEmail("")}
-            />
-            ) : null
-  }
-          />
+  <TextInput
+    label="Email"
+    value={email}
+    onChangeText={setEmail}
+    style={style.textField}
+    autoCapitalize="none"
+    right={
+    email.length > 0 ? (
+      <TextInput.Icon
+        icon={() => <MaterialCommunityIcons name="close" size={20} />}
+        onPress={() => setEmail("")}
+      />
+    ) : null
+    }
+    />
+{!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length > 0 ? (
+  <Text style={{ color: "red", marginLeft: 4, marginBottom: 4, fontSize: 12 }}>
+    Please enter a valid email address.
+  </Text>
+) : null}
 
         <TextInput
           label="Password"
