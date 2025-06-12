@@ -9,6 +9,7 @@ import {
 } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const styles = StyleSheet.create({
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
 });
 
 
-export default function Account({ navigation }) {
+export default function Account({ navigation, setIsLoggedIn }) {
   const theme = useTheme();
 
   const user = {
@@ -53,12 +54,15 @@ export default function Account({ navigation }) {
     birthdate: '18/07/2025',
   };
 
-  const handleLogout = () => {
-    // Handle logout
-    console.log('Logging out...');
-    // Clear user data or token if needed
-    navigation.navigate('Login');
-  };
+const handleLogout = async () => {
+  try {
+    await AsyncStorage.removeItem('userToken');
+    console.log('Benutzerdaten entfernt');
+    setIsLoggedIn(false);
+  } catch (error) {
+    console.error('Fehler beim Logout:', error);
+  }
+};
 
   return (
     <SafeAreaView style={[styles.root, { backgroundColor: theme.colors.secondaryContainer }]}>

@@ -25,7 +25,9 @@ export default function AppNavigator({ isLoggedIn, setIsLoggedIn }) {
         ) : (
           <>
             <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="Profile" component={Account} />
+            <Stack.Screen name="Profile">
+                {props => <Account {...props} setIsLoggedIn={setIsLoggedIn} />}
+            </Stack.Screen>
             <Stack.Screen name="Countries" component={Countries} />
             <Stack.Screen name="CountryDetails" component={CountryDetails} />
           </>
