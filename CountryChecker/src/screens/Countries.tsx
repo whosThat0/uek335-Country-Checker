@@ -57,6 +57,24 @@ const styles = StyleSheet.create({
     color: '#666',
     marginTop: 4,
   },
+  listContainer: {
+    width: '92%',
+    alignSelf: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    marginVertical: 16,
+    paddingTop: 8,
+    shadowColor: '#000',
+    shadowOpacity: 0.06,
+    shadowRadius: 8,
+    elevation: 2,
+  },
+  infoText: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginVertical: 8,
+    color: '#333',
+  },
 });
 
 export default function Countries({ navigation }) {
@@ -76,31 +94,37 @@ export default function Countries({ navigation }) {
     fetchCountries();
   }, []);
 
-
 return (
   <SafeAreaView style={styles.container}>
     <Text style={styles.title}>Countries</Text>
 
-    <ScrollView
-      style={styles.scroll}
-      contentContainerStyle={styles.scrollContent}
-    >
-      <View style={styles.innerContainer}>
-        {countries.map((country) => (
-          <View key={country.id} style={styles.card}>
-            <View style={styles.cardHeader}>
-              <Text style={styles.name}>{country.country_name}</Text>
-              <View style={styles.iconContainer}>
-                <Ionicons name="information-circle" size={20} color="#000000"  onPress={() => navigation.navigate('CountryDetails', { country })}/>
-                <Ionicons name="checkmark" size={20} color="#000000" onPress={() => console.log("Country genehmigt:", country.id)} />
-                <Ionicons name="trash" size={20} color="#000000" onPress={() => console.log("Country gelöscht:", country.id)} />
+    <View style={styles.listContainer}>
+      <ScrollView
+        style={styles.scroll}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.innerContainer}>
+          {countries.map((country) => (
+            <View key={country.id} style={styles.card}>
+              <View style={styles.cardHeader}>
+                <Text style={styles.name}>{country.country_name}</Text>
+                <View style={styles.iconContainer}>
+                  <Ionicons name="information-circle" size={20} color="#000000"  onPress={() => navigation.navigate('CountryDetails', { country })}/>
+                  <Ionicons name="checkmark" size={20} color="#000000" onPress={() => console.log("Country genehmigt:", country.id)} />
+                  <Ionicons name="trash" size={20} color="#000000" onPress={() => console.log("Country gelöscht:", country.id)} />
+                </View>
               </View>
+              <Text style={styles.id}>ID: {country.id}</Text>
             </View>
-            <Text style={styles.id}>ID: {country.id}</Text>
-          </View>
-        ))}
-      </View>
-    </ScrollView>
+          ))}
+        </View>
+      </ScrollView>
+    </View>
+
+    <Text style={styles.infoText}>
+      Und hier steht noch ein Text unter der Liste!
+    </Text>
   </SafeAreaView>
 );
 }
