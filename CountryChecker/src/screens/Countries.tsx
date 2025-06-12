@@ -1,9 +1,11 @@
 import React from 'react';
-import { Text,  ScrollView, View, StyleSheet, Alert } from 'react-native';
-import { Button, Card, useTheme } from 'react-native-paper';
+import { Text, ScrollView, View, StyleSheet, Alert } from 'react-native';
+import { Button, useTheme } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import api from '../services/api';
+import { Searchbar } from 'react-native-paper';
+
 
 const styles = StyleSheet.create({
   container: {
@@ -12,10 +14,10 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   title: {
-  fontSize: 22,
-  marginTop: 60,
-  marginBottom: 20,
-  alignSelf: 'center',
+    fontSize: 22,
+    marginTop: 15,
+    marginBottom: 20,
+    alignSelf: 'center',
   },
   scroll: {
     flex: 1,
@@ -57,29 +59,24 @@ const styles = StyleSheet.create({
     color: '#666',
     marginTop: 4,
   },
-  listContainer: {
-    width: '92%',
-    alignSelf: 'center',
-    backgroundColor: '#fff',
-    borderRadius: 20,
-    marginVertical: 16,
-    paddingTop: 8,
-    shadowColor: '#000',
-    shadowOpacity: 0.06,
-    shadowRadius: 8,
-    elevation: 2,
-  },
-  infoText: {
-    fontSize: 16,
-    textAlign: 'center',
-    marginVertical: 8,
-    color: '#333',
+  fab: {
+    position: 'absolute',
+    right: 24,
+    bottom: 60,
+    borderRadius: 50,
+    width: 56,
+    height: 56,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 4,
+    zIndex: 10,
   },
 });
 
 export default function Countries({ navigation }) {
   const theme = useTheme();
   const [countries, setCountries] = React.useState([]);
+  const [searchQuery, setSearchQuery] = React.useState('');
 
   const fetchCountries = async () => {
     try {
@@ -90,7 +87,11 @@ export default function Countries({ navigation }) {
     }
   };
 
-    const deleteCountry = async (id: number): Promise<void> => {
+    const filteredCountries = countries.filter((country) =>
+    country.country_name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const deleteCountry = async (id: number): Promise<void> => {
     try {
       await api.delete(`/country/${id}`);
       console.log(`Deleted Country with ID: ${id}`);
@@ -98,45 +99,49 @@ export default function Countries({ navigation }) {
     } catch (error) {
       console.error("Error deleting country:", error);
     }
-};
+  };
 
-  
-const confirmDelete = (id: number) => {
-  Alert.alert(
-    "Delete Country",
-    "Are you sure you want to delete this country?",
-    [
-      { text: "Cancel", style: "cancel" },
-      {
-        text: "Delete",
-        style: "destructive",
-        onPress: () => deleteCountry(id),
-      },
-    ]
-  );
-};
+  const confirmDelete = (id: number) => {
+    Alert.alert(
+      "Delete Country",
+      "Are you sure you want to delete this country?",
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: () => deleteCountry(id),
+        },
+      ]
+    );
+  };
 
   React.useEffect(() => {
     fetchCountries();
   }, []);
 
-return (
-  <SafeAreaView style={styles.container}>
-    <Text style={styles.title}>Countries</Text>
+  return (
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.title}>Countries</Text>
+      <Searchbar
+        placeholder="Search"
+        style={{ margin: 16, borderRadius: 8, backgroundColor: theme.colors.surface, height: 48 }}
+        onChangeText={setSearchQuery}
+        value={searchQuery}
+      />
       <ScrollView
         style={styles.scroll}
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-      <Button onPress={() => navigation.navigate('CountryAdd')}>Add a Country</Button>
         <View style={styles.innerContainer}>
-          {countries.map((country) => (
+          {filteredCountries.map((country) => (
             <View key={country.id} style={styles.card}>
               <View style={styles.cardHeader}>
                 <Text style={styles.name}>{country.country_name}</Text>
                 <View style={styles.iconContainer}>
-                  <Ionicons name="information-circle-outline" size={20} color="#000000"  onPress={() => navigation.navigate('CountryDetails', { country })}/>
-                  <Ionicons name="pencil-outline" size={20} color="#000000" onPress={() => navigation.navigate('CountryEdit', {country})} />
+                  <Ionicons name="information-circle-outline" size={20} color="#000000" onPress={() => navigation.navigate('CountryDetails', { country })} />
+                  <Ionicons name="pencil-outline" size={20} color="#000000" onPress={() => navigation.navigate('CountryEdit', { country })} />
                   <Ionicons name="trash-outline" size={20} color="#000000" onPress={() => confirmDelete(country.id)} />
                 </View>
               </View>
@@ -145,6 +150,16 @@ return (
           ))}
         </View>
       </ScrollView>
-  </SafeAreaView>
-);
+      <Button
+        mode="contained"
+        compact
+        style={styles.fab}
+        buttonColor={theme.colors.primary}
+        onPress={() => navigation.navigate('CountryAdd')}
+        contentStyle={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
+      >
+        <Ionicons name="add" size={24} color="#fff" />
+      </Button>
+    </SafeAreaView>
+  );
 }

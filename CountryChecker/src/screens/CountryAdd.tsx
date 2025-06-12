@@ -140,7 +140,7 @@ export default function CountryAdd({ navigation }) {
 
       <Button
         mode="outlined"
-        onPress={() => navigation.navigate('Countries')}
+        onPress={() => navigation.navigate('MainTabs', { screen: 'Countries' })}
       >
         Cancel
       </Button>
