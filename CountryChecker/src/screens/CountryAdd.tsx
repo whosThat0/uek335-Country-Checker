@@ -12,10 +12,10 @@ container: {
     padding: 20,
   },
   title: {
-    fontSize: 26,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 12,
+    fontSize: 22,
+    marginTop: 15,
+    marginBottom: 20,
+    alignSelf: 'center',
   },
   label: {
     fontSize: 16,
@@ -62,6 +62,12 @@ container: {
   inputSearchStyle: {
     height: 40,
     fontSize: 16,
+  },
+      button: {
+    alignSelf: 'flex-start',
+    marginBottom: 10,
+    elevation: 4,
+    borderRadius: 6,
   },
 });
 
@@ -133,7 +139,7 @@ export default function CountryAdd({ navigation }) {
       <Button
         mode="contained"
         onPress={handleAdding}
-        style={{ marginBottom: 12 }}
+       style={styles.button}
       >
         Save Country
       </Button>
@@ -141,6 +147,7 @@ export default function CountryAdd({ navigation }) {
       <Button
         mode="outlined"
         onPress={() => navigation.navigate('MainTabs', { screen: 'Countries' })}
+        style={[styles.button, { backgroundColor: '#f0f0f0' }]}
       >
         Cancel
       </Button>
