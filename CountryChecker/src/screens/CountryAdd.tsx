@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Alert } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Dropdown } from 'react-native-element-dropdown';
@@ -76,14 +76,26 @@ export default function CountryAdd({ navigation }) {
   const [countryContinent, setCountryContinent] = useState('');
   const [isFocus, setIsFocus] = useState(false);
 
-  const handleAdding = async () => {
+    const handleAdding = async () => {
+    if (!countryName.trim()) {
+      Alert.alert('Error', 'Country name cannot be empty.');
+      return;
+    }
+    if (!/^[A-Za-z\s]+$/.test(countryName.trim())) {
+      Alert.alert('Error', 'Country name can only contain letters and spaces.');
+      return;
+    }
+    if (!countryContinent) {
+      Alert.alert('Error', 'Please select a continent.');
+      return;
+    }
     try {
       await api.post('/country', {
         country_name: countryName,
         continent: countryContinent,
       });
       console.log('Country added!');
-     navigation.navigate('MainTabs', { screen: 'Countries' });
+      navigation.navigate('MainTabs', { screen: 'Countries' });
     } catch (error) {
       console.error('Error adding country:', error);
     }
@@ -139,7 +151,7 @@ export default function CountryAdd({ navigation }) {
       <Button
         mode="contained"
         onPress={handleAdding}
-       style={styles.button}
+        style={styles.button}
       >
         Save Country
       </Button>
