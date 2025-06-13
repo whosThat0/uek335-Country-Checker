@@ -48,6 +48,11 @@ const styles = StyleSheet.create({
   },
 });
 
+/**
+ * Home screen component.
+ * 
+ * Displays the home page with a introduction to the app and a button to navigate to the countries list.
+ */
 const Home = ({ navigation }) => {
   const theme = useTheme();
 
