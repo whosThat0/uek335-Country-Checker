@@ -76,6 +76,15 @@ export default function CountryAdd({ navigation }) {
   const [countryContinent, setCountryContinent] = useState('');
   const [isFocus, setIsFocus] = useState(false);
 
+
+/**
+* HanldeAdding function to add a new country.
+* 
+* Validates the country name and continent selection, then sends a Post request to the API to add the country.
+* Displays an alert if there are validation errors or if the request fails to inform the user.
+* If successful, navigates back to the Countries screen.
+*/
+    
     const handleAdding = async () => {
     if (!countryName.trim()) {
       Alert.alert('Error', 'Country name cannot be empty.');
