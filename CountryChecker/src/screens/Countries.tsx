@@ -91,6 +91,15 @@ export default function Countries({ navigation }) {
   const [searchQuery, setSearchQuery] = React.useState('');
   const [selectedRegions, setSelectedRegions] = React.useState<string[]>([]);
 
+   /**
+    * Fetches the list of countries from the API.
+    * 
+    * This function retrieves the list of countries from the backend /country endpoint of the
+    * API and updates the state with the fetched data.
+    * It handles any errors that may occur during the fetch operation.
+    * @param {Function} setCountries - Function to update the state with the fetched countries.
+    * @return {Promise<void>} A promise that resolves when the countries are fetched successfully.
+    */
   const fetchCountries = async () => {
     try {
       const response = await api.get('/country');
@@ -100,6 +109,11 @@ export default function Countries({ navigation }) {
     }
   };
 
+   /**
+    * Filters the list of countries based on the provided search query and selected continents.
+    * This function is case-insensitive and checks if the country name includes the search query,
+    * as well as if the country belongs to any of the selected continents.
+   */
     const filteredCountries = countries.filter((country) => {
     const matchesSearch = country.country_name.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesRegion =
@@ -107,6 +121,13 @@ export default function Countries({ navigation }) {
     return matchesSearch && matchesRegion;
   });
 
+
+  /**
+   * Deletes country by it's Id.
+   * 
+   * This function sends a Delete request to the API to remove a country with the specified Id.
+   * After it was deleted successfully, it fetches the updated list of countries.
+   */
   const deleteCountry = async (id: number): Promise<void> => {
     try {
       await api.delete(`/country/${id}`);
@@ -117,6 +138,13 @@ export default function Countries({ navigation }) {
     }
   };
 
+  /**
+   * Confirms the deletion of a country.
+   * 
+   * This function displays an alert to confirm if the user really wants to delete the country.
+   * If confirmed, it calls the deleteCountry function with the specified country Id.
+   * It is used to prevent accidental deletions by requiring user confirmation.
+   */
   const confirmDelete = (id: number) => {
     Alert.alert(
       "Delete Country",
