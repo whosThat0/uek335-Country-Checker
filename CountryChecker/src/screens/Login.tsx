@@ -49,6 +49,12 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ * Login screen component.
+ * 
+ * Handles user login functionality, including email and password input,
+ * validation, and interaction with a backend API for the authentication.
+ */
 export default function Login({ navigation, setIsLoggedIn }) {
    const theme = useTheme(); 
 
@@ -56,6 +62,13 @@ export default function Login({ navigation, setIsLoggedIn }) {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
+  /**
+   * handleLogin function
+   * 
+    * Handles the login process by sending a Post request to the backend API.
+    * If successful, it stores the access token in the AsyncStorage and updates the login state.
+    * Displays appropriate alerts for success or failure to inform the user.
+ */
   const handleLogin = async () => {
     setLoading(true);
     try {
