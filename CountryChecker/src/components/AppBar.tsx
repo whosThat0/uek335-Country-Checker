@@ -16,6 +16,12 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ * AppBar component for the application.
+ * 
+ * This component renders a bottom navigation bar with three tabs Home, Countries, and Profile.
+ * It allows users to navigate between different screens of the app.
+ */
 const AppBar = () => {
   const navigation = useNavigation();
   const [index, setIndex] = useState(0);
