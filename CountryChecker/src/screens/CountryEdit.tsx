@@ -65,6 +65,13 @@ const styles = StyleSheet.create({
   },
 });
 
+/**
+ * CountryEdit screen component.
+ * 
+ * Allows users to edit the details of a specific country.
+ * It fetches the current country details from the route parameters and provides input fields for editing.
+ * On saving, it updates the country information via an API call and navigates back to the Countries screen.
+ */
 export default function CountryEdit({ navigation, route }) {
   const { country } = route.params;
 
@@ -72,6 +79,13 @@ export default function CountryEdit({ navigation, route }) {
   const [countryContinent, setCountryContinent] = useState(country.continent);
   const [isFocus, setIsFocus] = useState(false);
 
+  /**
+   * HandleUpdate function to update the country details.
+   *
+   * Makes an API call to update the country information based on the provided country ID.
+   * When the update is successful, it navigates back to the Countries screen.
+   * Catches and logs any errors that occur during the update process.
+   */
   const handleUpdate = async () => {
     try {
       await api.put(`/country/${country.id}`, {
