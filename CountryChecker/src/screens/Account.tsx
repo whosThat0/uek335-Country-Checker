@@ -41,6 +41,13 @@ const styles = StyleSheet.create({
   },
 });
 
+/**
+ * Account screen component.
+ * 
+ * Displays the account information of the user that is currently logged in and provides a logout button.
+ * @param navigation - React Navigation property for navigating between screens.
+ * @param setIsLoggedIn - Function to update the authentication state in the parent component.
+ */
 export default function Account({ navigation, setIsLoggedIn = () => {} }) {
   const theme = useTheme();
 
@@ -51,6 +58,14 @@ export default function Account({ navigation, setIsLoggedIn = () => {} }) {
     age: '',
   });
 
+/**
+  * Fetches the current user's information when the component mounts.
+  * 
+  * Uses the `getCurrentUser` function from the UserService to retrieve the user data.
+  * If successful, updates the user state with the fetched data.
+  * Catches and logs any errors that occur during the fetch process.
+*/
+  
 useEffect(() => {
   const fetchUserFromStorage = async () => {
     try {
@@ -78,7 +93,14 @@ useEffect(() => {
 }, []);
 
 
-
+/**
+ * Logout function.
+ * 
+ * When clicked logs out the current user by removing their token from
+ * AsyncStorage and updating the authentication state.
+ * Catches any errors that occur during the logout process.
+ * @param {Function} setIsLoggedIn - Function to update the authentication state in the parent component.
+ */
   const handleLogout = async () => {
     try {
       await AsyncStorage.multiRemove(['userToken', 'id', 'firstname', 'lastname', 'email', 'age']);
