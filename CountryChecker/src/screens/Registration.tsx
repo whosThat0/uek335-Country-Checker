@@ -43,6 +43,13 @@ const styles = StyleSheet.create({
   },
 });
 
+/**
+ * Signup screen component.
+ * 
+ * Handles user registration functionality, including input validation,
+ * interaction with a backend API for creating a new user account,
+ * and managing the authentication state.
+ */
 export default function Signup({ navigation, setIsLoggedIn }) {
   const theme = useTheme(); 
 
@@ -58,6 +65,13 @@ export default function Signup({ navigation, setIsLoggedIn }) {
   const [ageError, setAgeError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  /**
+   * Validation functions for user input fields.
+   * 
+   * Validates email format, password strength, name characters,
+   * and age range.
+   * Informs the user of any validation errors through state updates.
+ */
   const isEmailValid = (email) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
@@ -137,6 +151,13 @@ export default function Signup({ navigation, setIsLoggedIn }) {
       const data = await response.json();
       console.log("Signup response:", data);
 
+/**
+ * Handle the signup process.
+ * 
+ * If the response is successful and contains an access token,
+ * it stores the token in AsyncStorage and updates the login state.
+ * Displays an alert to inform the user of the signup success or failure.
+ */
       if (response.ok && data.accessToken) {
         await AsyncStorage.setItem("@access_token", data.accessToken);
         await AsyncStorage.setItem("@access_token", data.accessToken);
