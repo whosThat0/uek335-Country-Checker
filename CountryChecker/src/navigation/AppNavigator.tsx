@@ -15,6 +15,12 @@ import CountryAdd from '../screens/CountryAdd';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
+/**
+ * MainTabs component that renders the bottom tab navigator with Home, Countries, and Profile tabs.
+ * 
+ * @param {Object} props - The component props.
+ * @param {Function} props.setIsLoggedIn - Function to set the login state.
+ */
 function MainTabs({ setIsLoggedIn }) {
   return (
     <Tab.Navigator
@@ -48,6 +54,10 @@ function MainTabs({ setIsLoggedIn }) {
   );
 }
 
+/**
+ * AppNavigator component.
+ * It conditionally renders the login/registration screens or the main application tabs based on the authentication state.
+ */
 export default function AppNavigator({ isLoggedIn, setIsLoggedIn }) {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
