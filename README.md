@@ -1,9 +1,11 @@
 # uek335-Country-Checker
 
 ## Dokumentaion
-```
-Add path
-```
+[Projekt Dokumentation](https://github.com/whosThat0/uek335-Gruppe5-CountryDetailsChecker/blob/main/uek335-Gruppe5-CountryDetailsChecker_documentation_NaimaCavegn_AvaZimmermann.pdf)
+
+
+## Präsentation
+[Slides](https://docs.google.com/presentation/d/18jT7Sxho_KU59fi2RJAQfQyQ36v8xE70UiALIx_yc70/edit?usp=sharing)
 
 ## Installationsanleitung
 ### Voraussetzungen
