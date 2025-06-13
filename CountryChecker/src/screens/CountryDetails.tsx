@@ -42,6 +42,11 @@ const styles = StyleSheet.create({
   },
 });
 
+/**
+ * CountryDetails screen component.
+ * 
+ * Displays detailed information about a specific country.
+ */
 export default function CountryDetails({ route, navigation }) {
   const theme = useTheme();
   const { country } = route.params;
